@@ -1,0 +1,96 @@
+{% extends "dashboard/base.html" %}
+
+{% block header_title %}Doctor / Admin Overview{% endblock %}
+{% block header_subtitle %}
+    <p class="muted">High-level snapshot of platform activity and risk signals.</p>
+{% endblock %}
+
+{% block content %}
+    <section class="grid-kpi">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Z" stroke-width="1.6" />
+                        <path d="M6 20c0-2.21 2.69-4 6-4s6 1.79 6 4" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h3>Users</h3>
+            </div>
+            <p class="kpi-value">{{ users.total }}</p>
+            <p class="muted">Patients: {{ users.patients }} • Doctors: {{ users.doctors }}</p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M7 4h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Z" stroke-width="1.6" />
+                        <path d="M9 3v3M15 3v3M5 9h14" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h3>Appointments</h3>
+            </div>
+            <p class="kpi-value">{{ appointments.total }}</p>
+            <p class="muted">
+                Pending: {{ appointments.pending }}
+                &nbsp;•&nbsp; Approved: {{ appointments.approved }}
+                &nbsp;•&nbsp; Completed: {{ appointments.completed }}
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M12 5v7" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M12 17h.01" stroke-width="2" stroke-linecap="round" />
+                        <path d="M11.05 3.54 3.6 17.25A1.5 1.5 0 0 0 4.9 19.5h14.2a1.5 1.5 0 0 0 1.3-2.25L13.95 3.54a1.5 1.5 0 0 0-2.9 0Z" stroke-width="1.6" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <h3>Emergency Alerts</h3>
+            </div>
+            <p class="kpi-value">{{ alerts.total }}</p>
+            <p class="muted">
+                Active: {{ alerts.unresolved }}
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">
+                    <svg viewBox="0 0 24 24" fill="none">
+                        <path d="M5 19V9" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M12 19V5" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M19 19v-7" stroke-width="1.6" stroke-linecap="round" />
+                        <path d="M4 19h16" stroke-width="1.6" stroke-linecap="round" />
+                    </svg>
+                </div>
+                <h3>Analytics</h3>
+            </div>
+            <p class="kpi-value">{{ analytics.risk_scores }}</p>
+            <p class="muted">Vital entries: {{ analytics.vital_sign_entries }}</p>
+        </div>
+    </section>
+
+    <section class="card" style="margin-top: 1.5rem;">
+        <h3>Summary</h3>
+        <table>
+            <tbody>
+            <tr><th colspan="2">Users</th></tr>
+            <tr><td>Total</td><td>{{ users.total }}</td></tr>
+            <tr><td>Patients</td><td>{{ users.patients }}</td></tr>
+            <tr><td>Doctors</td><td>{{ users.doctors }}</td></tr>
+
+            <tr><th colspan="2">Consultations</th></tr>
+            <tr><td>Sessions</td><td>{{ consultations.sessions }}</td></tr>
+            <tr><td>Prescriptions</td><td>{{ consultations.prescriptions }}</td></tr>
+
+            <tr><th colspan="2">Alerts</th></tr>
+            <tr><td>Total Alerts</td><td>{{ alerts.total }}</td></tr>
+            <tr><td>Unresolved</td><td>{{ alerts.unresolved }}</td></tr>
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+

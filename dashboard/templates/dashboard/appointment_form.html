@@ -1,0 +1,18 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}New Appointment - Dashboard{% endblock %}
+{% block header_title %}New Appointment{% endblock %}
+{% block header_subtitle %}
+    <p class="muted">Schedule a teleconsultation between a patient and a doctor.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn-primary" style="margin-top: 0.5rem;">Create appointment</button>
+        </form>
+    </div>
+{% endblock %}
+

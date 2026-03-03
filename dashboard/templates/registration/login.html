@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Health Monitoring &amp; Telemedicine</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: radial-gradient(circle at top, #1e293b, #020617);
+            color: #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .card {
+            background: #e4e7ff; /* darker than page background, matches dashboard cards */
+            border-radius: 1.1rem;
+            padding: 1.8rem 2rem;
+            border: 1px solid rgba(148, 163, 184, 0.8);
+            width: 360px;
+            box-shadow: 0 14px 32px rgba(148, 163, 184, 0.55);
+        }
+        h1 {
+            margin-top: 0;
+            margin-bottom: 0.75rem;
+            font-size: 1.4rem;
+        }
+        .muted {
+            color: #9ca3af;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        label {
+            font-size: 0.9rem;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.5rem 0.7rem;
+            border-radius: 0.6rem;
+            border: 1px solid #1f2937;
+            background: #020617;
+            color: #e5e7eb;
+            box-sizing: border-box;
+        }
+        .btn-primary {
+            border: none;
+            border-radius: 999px;
+            padding: 0.55rem 1.25rem;
+            cursor: pointer;
+            font-weight: 600;
+            background-image: linear-gradient(90deg, #38bdf8, #a855f7);
+            color: #020617;
+            margin-top: 0.5rem;
+            box-shadow:
+                0 14px 34px rgba(15, 23, 42, 0.85),
+                0 0 0 1px rgba(15, 23, 42, 0.9);
+        }
+        .errorlist {
+            list-style: none;
+            padding: 0.5rem 0.7rem;
+            margin: 0 0 0.75rem;
+            border-radius: 0.6rem;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.5);
+            color: #fecaca;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>Sign in</h1>
+    <p class="muted">Use your doctor/admin account to access the dashboard.</p>
+
+    {% if form.errors %}
+        {{ form.non_field_errors }}
+    {% endif %}
+
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next|default:'/' }}">
+
+        <label for="{{ form.username.id_for_label }}">Username</label>
+        {{ form.username }}
+
+        <label for="{{ form.password.id_for_label }}">Password</label>
+        {{ form.password }}
+
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Appointments - Dashboard{% endblock %}
+{% block header_title %}Appointments{% endblock %}
+{% block header_subtitle %}
+    <p class="muted">Manage scheduled teleconsultations between doctors and patients.</p>
+{% endblock %}
+
+{% block content %}
+    <div style="margin-bottom: 0.9rem;">
+        <a href="/dashboard/appointments/new/">
+            <button class="btn-primary">+ New appointment</button>
+        </a>
+    </div>
+
+    <div class="card">
+        {% if appointments %}
+            <table>
+                <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Doctor</th>
+                    <th>Scheduled time</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in appointments %}
+                    <tr>
+                        <td>{{ a.patient.user.get_full_name|default:a.patient.user.username }}</td>
+                        <td>Dr. {{ a.doctor.user.get_full_name|default:a.doctor.user.username }}</td>
+                        <td>{{ a.scheduled_time }}</td>
+                        <td>
+                            <span class="pill {% if a.status == 'COMPLETED' %}pill-green{% endif %}">
+                                {{ a.status }}
+                            </span>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="muted">No appointments yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

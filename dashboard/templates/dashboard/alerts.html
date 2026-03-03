@@ -1,0 +1,55 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Emergency Alerts - Dashboard{% endblock %}
+{% block header_title %}Emergency Alerts{% endblock %}
+{% block header_subtitle %}
+    <p class="muted">Monitor and resolve real-time emergency events from patients.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        {% if alerts %}
+            <table>
+                <thead>
+                <tr>
+                    <th>Patient</th>
+                    <th>Location (lat, lng)</th>
+                    <th>Triggered</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in alerts %}
+                    <tr>
+                        <td>{{ a.patient.user.get_full_name|default:a.patient.user.username }}</td>
+                        <td>{{ a.latitude }}, {{ a.longitude }}</td>
+                        <td>{{ a.triggered_at }}</td>
+                        <td>
+                            {% if a.resolved %}
+                                <span class="pill pill-green">Resolved</span>
+                            {% else %}
+                                <span class="pill pill-red">Active</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if not a.resolved %}
+                                <form method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="alert_id" value="{{ a.id }}">
+                                    <button type="submit" class="btn-primary" style="font-size: 0.8rem; padding-inline: 0.9rem;">
+                                        Mark resolved
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="muted">No emergency alerts.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,37 @@
+{% extends "dashboard/base.html" %}
+
+{% block title %}Patients - Dashboard{% endblock %}
+{% block header_title %}Patients{% endblock %}
+{% block header_subtitle %}
+    <p class="muted">List of all registered patients in the telemedicine platform.</p>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        {% if patients %}
+            <table>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>Phone</th>
+                    <th>Country</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in patients %}
+                    <tr>
+                        <td>{{ p.user.get_full_name|default:p.user.username }}</td>
+                        <td>{{ p.user.username }}</td>
+                        <td>{{ p.user.phone_number }}</td>
+                        <td>{{ p.user.country }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="muted">No patients registered yet.</p>
+        {% endif %}
+    </div>
+{% endblock %}
+
